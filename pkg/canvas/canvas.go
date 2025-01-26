@@ -3,12 +3,17 @@ package canvas
 import (
 	"fmt"
 	"syscall/js"
+
+	"github.com/jinpain/go-canvas/pkg/shape"
 )
 
 type CanvasInterface interface {
 	Clear()
 	Resize(width, height int)
 	GetContext() js.Value
+	GetWidth() int
+	GetHeight() int
+	DrawShape(shape shape.Shape)
 }
 
 type canvas struct {
@@ -76,4 +81,16 @@ func (c *canvas) Clear() {
 
 func (c *canvas) GetContext() js.Value {
 	return c.ctx
+}
+
+func (c *canvas) GetWidth() int {
+	return c.width
+}
+
+func (c *canvas) GetHeight() int {
+	return c.height
+}
+
+func (c *canvas) DrawShape(shape shape.Shape) {
+	shape.Draw(c.ctx)
 }
